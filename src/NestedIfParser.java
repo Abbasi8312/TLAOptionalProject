@@ -9,7 +9,40 @@ class NestedIfParser {
         System.out.println("--------------------------------------------------");
         Parser parser = new Parser(cfg);
         Scanner scanner = new Scanner(System.in);
-        System.out.println(parser.parse(scanner.nextLine()));
+        List<CFG.Rule> parsed = parser.parse(scanner.nextLine());
+        displayOutput(parsed);
+    }
+
+    private static void displayOutput(List<CFG.Rule> parsed) {
+        if (parsed == null) {
+            System.out.println("This input can't be parsed");
+            return;
+        }
+        List<CFG.Variable> variables = new ArrayList<>();
+        StringBuilder output = new StringBuilder();
+        for (CFG.Rule rule : parsed) {
+            output.append(rule.lhs());
+            for (int j = variables.size() - 1; j >= 0; j--) {
+                if (variables.get(j) == null) {
+                    continue;
+                }
+                if (rule.lhs().equals(variables.get(j))) {
+                    output.append("[").append(j).append("]");
+                    variables.set(j, null);
+                    break;
+                }
+            }
+            output.append("->");
+            for (int j = 0; j < rule.rhs().size(); j++) {
+                output.append(rule.rhs().get(j));
+                if (rule.rhs().get(j) instanceof CFG.Variable variable) {
+                    output.append("[").append(variables.size()).append("]");
+                    variables.add(variable);
+                }
+            }
+            output.append("\n");
+        }
+        System.out.println(output);
     }
 
     private static CFG constructGrammar() {

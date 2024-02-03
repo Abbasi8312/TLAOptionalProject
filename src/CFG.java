@@ -135,6 +135,14 @@ public class CFG {
             this.rhs = rhs;
         }
 
+        public Variable lhs() {
+            return lhs;
+        }
+
+        public List<Symbol> rhs() {
+            return rhs;
+        }
+
         public boolean applyRule(Stack<Symbol> stack) {
             for (int i = rhs.size() - 1; i >= 0; i--) {
                 if (stack.isEmpty()) {

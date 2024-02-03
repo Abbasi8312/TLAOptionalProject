@@ -4,8 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0079ce0a-2d7a-4f8b-9ad0-f851acee4c1a" name="Changes" comment="Beautify by function">
-      <change afterPath="$PROJECT_DIR$/src/Parser.java" afterDir="false" />
+    <list default="true" id="0079ce0a-2d7a-4f8b-9ad0-f851acee4c1a" name="Changes" comment="Recursive approach">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/CFG.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/CFG.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/NestedIfParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/NestedIfParser.java" afterDir="false" />
@@ -88,7 +87,15 @@
       <option name="project" value="LOCAL" />
       <updated>1706969143491</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Recursive approach">
+      <option name="closed" value="true" />
+      <created>1706981173296</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1706981173296</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -109,6 +116,7 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="Create CFG class" />
     <MESSAGE value="Beautify by function" />
-    <option name="LAST_COMMIT_MESSAGE" value="Beautify by function" />
+    <MESSAGE value="Recursive approach" />
+    <option name="LAST_COMMIT_MESSAGE" value="Recursive approach" />
   </component>
 </project>
