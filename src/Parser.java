@@ -21,12 +21,17 @@ public class Parser {
     public List<CFG.Rule> parse(Queue<String> buffer, Stack<CFG.Symbol> stack) {
         Stack<CFG.Symbol> newStack = (Stack<CFG.Symbol>) stack.clone();
         Queue<String> newBuffer = new LinkedList<>(buffer);
-        if (!buffer.isEmpty()) {
-            newStack.push(new CFG.Terminal(newBuffer.poll()));
+        while (!buffer.isEmpty()) {
+            String value = newBuffer.poll();
+            if (value.equals(" ") || value.equals("\n")) {
+                continue;
+            }
+            newStack.push(new CFG.Terminal(value));
             List<CFG.Rule> tmp = parse(newBuffer, newStack);
             if (tmp != null) {
                 return tmp;
             }
+            break;
         }
         for (CFG.Rule rule : rules) {
             newStack = (Stack<CFG.Symbol>) stack.clone();
