@@ -72,6 +72,14 @@ public class CFG {
         return addRule(lhs, newRhs);
     }
 
+    public List<Rule> rules() {
+        return new ArrayList<>(rules);
+    }
+
+    public String startVariable() {
+        return startVariable;
+    }
+
     public abstract static class Symbol {
         private final String value;
 
@@ -129,6 +137,9 @@ public class CFG {
 
         public boolean applyRule(Stack<Symbol> stack) {
             for (int i = rhs.size() - 1; i >= 0; i--) {
+                if (stack.isEmpty()) {
+                    return false;
+                }
                 if (!rhs.get(i).equals(stack.pop())) {
                     // Don't apply and Push back the popped symbols (Restore to original state)
                     for (int j = i; j < rhs.size(); j++) {

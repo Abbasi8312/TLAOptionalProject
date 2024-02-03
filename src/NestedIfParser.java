@@ -1,10 +1,15 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 class NestedIfParser {
     public static void main(String[] args) {
         CFG cfg = constructGrammar();
         System.out.println(cfg);
+        System.out.println("--------------------------------------------------");
+        Parser parser = new Parser(cfg);
+        Scanner scanner = new Scanner(System.in);
+        System.out.println(parser.parse(scanner.nextLine()));
     }
 
     private static CFG constructGrammar() {
@@ -48,7 +53,6 @@ class NestedIfParser {
         for (char i = '0'; i <= '9'; i++) {
             cfg.addRule("N", List.of(new CFG.Symbol[]{new CFG.Terminal(String.valueOf(i))}));
         }
-
         return cfg;
     }
 }
