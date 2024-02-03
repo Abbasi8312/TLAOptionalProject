@@ -1,17 +1,20 @@
 import java.util.*;
 
 public class CFG {
-    private final Set<Terminal> terminalSet;
-    private final Set<Variable> variableSet;
-    private final Variable startVariable;
+    private final Set<String> terminalSet;
+    private final Set<String> variableSet;
+    private final String startVariable;
     private final List<Rule> rules;
 
-    public CFG(Set<Terminal> terminalSet, Set<Variable> variableSet, Variable startVariable) {
+    public CFG(String[] terminals, String[] variables, String startVariable) {
         terminalSet = new HashSet<>();
         variableSet = new HashSet<>();
         rules = new ArrayList<>();
-        this.terminalSet = terminalSet;
-        this.variableSet = variableSet;
+        terminalSet.addAll(Arrays.asList(terminals));
+        variableSet.addAll(Arrays.asList(variables));
+        if (!variableSet.contains(startVariable)) {
+            throw new RuntimeException("Invalid start variable!");
+        }
         this.startVariable = startVariable;
     }
 
@@ -19,11 +22,11 @@ public class CFG {
     public String toString() {
         StringBuilder out = new StringBuilder("CFG {\n");
         out.append("Terminals: ");
-        for (Terminal terminal : terminalSet) {
+        for (String terminal : terminalSet) {
             out.append(terminal).append(" ");
         }
         out.append("\nVariables: ");
-        for (Variable variable : variableSet) {
+        for (String variable : variableSet) {
             out.append(variable).append(" ");
         }
         out.append("\nStart Variable: ").append(startVariable);
@@ -35,17 +38,18 @@ public class CFG {
         return out.toString();
     }
 
-    public boolean addRule(Variable lhs, List<Symbol> rhs) {
+    public boolean addRule(String lhs, List<Symbol> rhs) {
         if (!variableSet.contains(lhs)) {
-            throw new RuntimeException("Invalid Variable");
+            throw new RuntimeException("Invalid Variable!");
         }
         for (Symbol element : rhs) {
             if (element instanceof Variable variable && !variableSet.contains(
-                    variable) || element instanceof Terminal terminal && !terminalSet.contains(terminal)) {
-                throw new RuntimeException("Invalid Symbol");
+                    variable.value()) || element instanceof Terminal terminal && !terminalSet.contains(
+                    terminal.value())) {
+                throw new RuntimeException("Invalid Symbol!");
             }
         }
-        Rule rule = new Rule(lhs, rhs);
+        Rule rule = new Rule(new Variable(lhs), rhs);
         if (rules.contains(rule)) {
             return false;
         }
@@ -53,11 +57,30 @@ public class CFG {
         return true;
     }
 
+    public boolean addRule(String lhs, String rhs) {
+        List<Symbol> newRhs = new ArrayList<>();
+        for (int i = 0; i < rhs.length(); i++) {
+            String value = String.valueOf(rhs.charAt(i));
+            if (variableSet.contains(value)) {
+                newRhs.add(new Variable(value));
+            } else if (terminalSet.contains(value)) {
+                newRhs.add(new Terminal(value));
+            } else {
+                throw new RuntimeException("Invalid symbol!");
+            }
+        }
+        return addRule(lhs, newRhs);
+    }
+
     public abstract static class Symbol {
         private final String value;
 
         public Symbol(String value) {
             this.value = value;
+        }
+
+        public String value() {
+            return value;
         }
 
         @Override
